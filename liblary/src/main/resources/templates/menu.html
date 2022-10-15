@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!-- th:replaceを使用して、 共通ヘッダエリアを読込みます -->
+<head
+	th:replace="layout/head :: head_fragment(title = 'メニュー画面', scripts = ~{}, links = ~{})"></head>
+<body>
+	<!-- th:replaceを使用して、 共通ヘッダーエリアフラグメントを読込みます -->
+	<div th:replace="layout/header :: header_fragment"></div>
+	<!-- th:replaceを使用して、 共通ナビゲーションエリアフラグメントを読込みます -->
+	<div th:replace="layout/nav :: nav_fragment"></div>
+	<!-- th:replaceを使用して、 共通サイドメニューエリアフラグメントを読込みます -->
+	<div th:replace="layout/sideMenu :: side_menu_fragment"></div>
+	<!-- th:replaceを使用して、 共通エラーメッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/errMessageArea}"></div>
+	<!-- th:replaceを使用して、 共通成功メッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/successMessageArea}"></div>
+	<div id="container">
+		<h1>メニュー画面</h1>
+		<form th:action="@{/menu/}" th:object="${menuBean}" method="get">
+			<th:block th:if="${menuBean.loginCategory == 0}">
+				<div class="user_menu">
+					<h2 id="menu">利用者メニュ一覧</h2>
+					<ul style="column-count: 4">
+						<li><a th:href="@{/user_menu/library_search/}">本を検索</a></li>
+						<li><a th:href="@{/user_menu/user_confirm/}">本を返却</a></li>
+						<li><a th:href="@{/user_menu/book_request/}">本をリクエスト</a></li>
+						<li><a th:href="@{/user_menu/message/}">管理者からのメッセージを確認</a></li>
+					</ul>
+				</div>
+			</th:block>
+			<th:block th:if="${menuBean.loginCategory == 1}">
+				<div class="manager_menu">
+					<h2 id="menu">管理者メニュ一覧</h2>
+					<ul style="column-count: 4">
+						<li><a th:href="@{/manager_menu/rental_book_confirm/}">本の返却状況を確認</a></li>
+						<li><a th:href="@{/manager_menu/book_request_confirm/}">リクエストされた本を注文する</a></li>
+						<li><a th:href="@{/manager_menu/order_product_confirm/}">注文した本の納品状況を確認する</a></li>
+					</ul>
+				</div>
+			</th:block>
+			<th:block th:if="${menuBean.loginCategory == 2}">
+				<div class="salesperson_menu">
+					<h2 id="menu">店員メニュ一覧</h2>
+					<ul style="column-count: 4">
+						<li><a th:href="@{/sales_menu/order_product/}">注文された本を発注する</a></li>
+					</ul>
+				</div>
+			</th:block>
+
+		</form>
+	</div>
+	<!-- th:replaceを使用して、 共通フッターエリアフラグメントを読込みます -->
+	<div th:replace="layout/footer :: footer_fragment"></div>
+	<!--/#container-->
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!-- th:replaceを使用して、 共通ヘッダエリアを読込みます -->
+<head
+	th:replace="layout/head :: head_fragment(title = '貸出状況詳細画面', scripts = ~{}, links = ~{})"></head>
+<body>
+	<!-- th:replaceを使用して、 共通ヘッダーエリアフラグメントを読込みます -->
+	<div th:replace="layout/header :: header_fragment"></div>
+	<!-- th:replaceを使用して、 共通ナビゲーションエリアフラグメントを読込みます -->
+	<div th:replace="layout/nav :: nav_fragment"></div>
+	<!-- th:replaceを使用して、 共通サイドメニューエリアフラグメントを読込みます -->
+	<div th:replace="layout/sideMenu :: side_menu_fragment"></div>
+	<!-- th:replaceを使用して、 共通エラーメッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/errMessageArea}"></div>
+	<!-- th:replaceを使用して、 共通成功メッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/successMessageArea}"></div>
+	<div id="container">
+		<h1>貸出状況詳細画面</h1>
+		<div id="form">
+			<form th:action="@{/manager_menu/rental_book_confirm/detail}"
+				th:object="${rentalBookConfirmDetailBean}" method="post">
+				<main>
+					<section>
+						<h2>
+							図書館の利用状況について不備があれば<br> 利用者へ伝えるメッセージを書き込んでください。
+						</h2>
+						<div class="list">
+							<img src="images/sample1.jpg" alt=""> <input type="hidden"
+								name="userId" th:value="*{userId}"></input>
+							<section class="userInfomation">
+								<table>
+									<thead>
+										<tr>
+											<th colspan="2">図書館利用者情報</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><label>利用者名</label></td>
+											<td><span class="titleName" th:text="*{userName}"></span></td>
+										</tr>
+										<tr>
+											<td><label>カード番号</label></td>
+											<td><span class="userCardNo" th:text="*{userCardNo}"></span></td>
+										</tr>
+										<tr>
+											<td><label>メールアドレス</label></td>
+											<td><span class="mail" th:text="*{mail}"></span></td>
+										</tr>
+										<tr>
+											<td colspan="2">※200文字以内<br> <textarea
+													name="contactMessage" th:filed="*{contactMessage}"
+													th:value="*{contactMessage}" rows="4" cols="40"></textarea>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2"><input type="submit"
+												value="メッセージを利用者へ伝える"></td>
+										</tr>
+									</tbody>
+								</table>
+							</section>
+							<section class="rentalBooks">
+								<table>
+									<thead>
+										<tr>
+											<th>書名</th>
+											<th>著者</th>
+											<th>出版社名</th>
+											<th>申込日</th>
+											<th>返却予定日</th>
+											<th>貸出状況</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+											th:each="tmp : ${rentalBookConfirmDetailBean.searchResultList}">
+											<td th:text="${tmp.titleName}">/td>
+											<td th:text="${tmp.author}">/td>
+											<td th:text="${tmp.publisherName}"></td>
+											<td th:text="${tmp.rentalDate}"></td>
+											<td th:text="${tmp.bookReturnDate}"></td>
+											<td th:text="${tmp.rentalBookStatus}"></td>
+										</tr>
+									</tbody>
+								</table>
+							</section>
+						</div>
+					</section>
+				</main>
+			</form>
+		</div>
+		<!-- th:replaceを使用して、 共通フッターエリアフラグメントを読込みます -->
+		<div th:replace="layout/footer :: footer_fragment"></div>
+	</div>
+	<!--/#container-->
+</body>
+</html>

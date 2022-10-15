@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>404Error</title>
+</head>
+<body>
+    <h1>セッションエラー専用ページです<br>ログイン画面に戻ってください</h1>
+    <form method="GET" th:action="@{/login/}">
+        <button class="btn btn-link" type="submit">ログイン画面に戻る</button>
+    </form>
+</body>
+</html>

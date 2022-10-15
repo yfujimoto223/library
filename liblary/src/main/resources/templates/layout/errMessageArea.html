@@ -1,0 +1,5 @@
+    <table xmlns:th="http://www.thymeleaf.org" th:fragment="errMessageArea">
+        <tr th:if="${validationError}" th:each="error : ${validationError}">
+            <td style="color: red;" th:text="${error}"></td>
+        </tr>
+    </table>

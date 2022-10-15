@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!-- th:replaceを使用して、 共通ヘッダエリアを読込みます -->
+<head
+	th:replace="layout/head :: head_fragment(title = '注文書籍納品状況確認画面', scripts = ~{}, links = ~{})"></head>
+<body>
+	<!-- th:replaceを使用して、 共通ヘッダーエリアフラグメントを読込みます -->
+	<div th:replace="layout/header :: header_fragment"></div>
+	<!-- th:replaceを使用して、 共通ナビゲーションエリアフラグメントを読込みます -->
+	<div th:replace="layout/nav :: nav_fragment"></div>
+	<!-- th:replaceを使用して、 共通サイドメニューエリアフラグメントを読込みます -->
+	<div th:replace="layout/sideMenu :: side_menu_fragment"></div>
+	<!-- th:replaceを使用して、 共通エラーメッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/errMessageArea}"></div>
+	<!-- th:replaceを使用して、 共通成功メッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/successMessageArea}"></div>
+	<div id="container">
+		<h1>注文書籍納品状況確認画面</h1>
+		<section class="search_area">
+			<form th:action="@{/manager_menu/order_product_confirm}"
+				th:object="${orderedProductConfirmBean}" method="post">
+				<section>
+					<h4>注文書籍を確認する場合、「詳細を確認」をクリックしてください。</h4>
+					<div>
+						注文日From:<input type="date" th:field="*{orderDateFrom}"
+							name="orderDateFrom">～ 注文日To:<input type="date"
+							th:field="*{orderDateTo}" name="orderDateTo"><br>
+						<button id="search">発注された書籍を検索</button>
+					</div>
+					<br>
+				</section>
+				<section>
+					<h4>検索結果</h4>
+					<table>
+						<thead>
+							<tr>
+								<th>納品状況</th>
+								<th>注文ID</th>
+								<th>注文者日</th>
+								<th>注文者名</th>
+								<th>発注金額</th>
+								<th>注文詳細内容を確認</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="tmp : ${orderedProductConfirmBean.searchResultList}">
+								<th:block th:if="${tmp.completedFlg == true}">
+									<td>納品済み</td>
+								</th:block>
+								<th:block th:if="${tmp.completedFlg == false}">
+									<td>注文中</td>
+								</th:block>
+								<td th:text="${tmp.orderId}"></td>
+								<td th:text="${tmp.orderDate}"></td>
+								<td th:text="${tmp.managerName}"></td>
+								<td th:text="${tmp.orderAmount}"></td>
+								<td><a th:href="${tmp.detailLink}">詳細を確認</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+			</form>
+		</section>
+		<!-- th:replaceを使用して、 共通フッターエリアフラグメントを読込みます -->
+		<div th:replace="layout/footer :: footer_fragment"></div>
+	</div>
+	<!--/#container-->
+</body>
+</html>

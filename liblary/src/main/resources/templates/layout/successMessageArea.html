@@ -1,0 +1,7 @@
+<table xmlns:th="http://www.thymeleaf.org"
+	th:fragment="successMessageArea">
+	<tr th:if="${successMessageList}"
+		th:each="success : ${successMessageList}">
+		<td style="color: rgb(0, 128, 255);" th:text="${success}"></td>
+	</tr>
+</table>

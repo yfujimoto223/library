@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!-- th:replaceを使用して、 共通ヘッダエリアを読込みます -->
+<head
+	th:replace="layout/head :: head_fragment(title = '利用状況確認画面', scripts = ~{}, links = ~{})"></head>
+<body>
+	<!-- th:replaceを使用して、 共通ヘッダーエリアフラグメントを読込みます -->
+	<div th:replace="layout/header :: header_fragment"></div>
+	<!-- th:replaceを使用して、 共通ナビゲーションエリアフラグメントを読込みます -->
+	<div th:replace="layout/nav :: nav_fragment"></div>
+	<!-- th:replaceを使用して、 共通サイドメニューエリアフラグメントを読込みます -->
+	<div th:replace="layout/sideMenu :: side_menu_fragment"></div>
+	<!-- th:replaceを使用して、 共通エラーメッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/errMessageArea}"></div>
+	<!-- th:replaceを使用して、 共通成功メッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/successMessageArea}"></div>
+	<div id="container">
+		<h1>利用状況確認画面</h1>
+		<div id="form">
+			<form th:action="@{/user_menu/user_confirm/}"
+				th:object="${userConfirmBean}" method="post">
+				<h4>貸出された本を返却予定の方はチェックつけて「本を返却する」をクリックして下さい</h4>
+				<input type="submit" id="btn1" value="本を返却する" />
+				<table>
+					<thead>
+						<tr>
+							<th>返却チェックボックス</th>
+							<th>書名</th>
+							<th>著者</th>
+							<th>出版社</th>
+							<th>申込日</th>
+							<th>返却予定日</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="search : ${userConfirmBean.searchResultList}">
+							<td><input type="checkbox" name="checks"
+								th:id="${search.rentalId}" th:value="${search.rentalId}"
+								th:checked="${userConfirmBean.checks.contains(search.rentalId)}" /></td>
+							<td th:text="${search.titleName}"></td>
+							<td th:text="${search.author}"></td>
+							<td th:text="${search.publisherName}"></td>
+							<td th:text="${search.rentalDate}"></td>
+							<td th:text="${search.returnDate}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+	<!-- th:replaceを使用して、 共通フッターエリアフラグメントを読込みます -->
+	<div th:replace="layout/footer :: footer_fragment"></div>
+
+	<!--/#container-->
+</body>
+</html>

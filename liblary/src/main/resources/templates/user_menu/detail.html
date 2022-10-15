@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!-- th:replaceを使用して、 共通ヘッダエリアを読込みます -->
+<head
+	th:replace="layout/head :: head_fragment(title = '書籍紹介画面', scripts = ~{}, links = ~{})"></head>
+<body>
+	<!-- th:replaceを使用して、 共通ヘッダーエリアフラグメントを読込みます -->
+	<div th:replace="layout/header :: header_fragment"></div>
+	<!-- th:replaceを使用して、 共通ナビゲーションエリアフラグメントを読込みます -->
+	<div th:replace="layout/nav :: nav_fragment"></div>
+	<!-- th:replaceを使用して、 共通サイドメニューエリアフラグメントを読込みます -->
+	<div th:replace="layout/sideMenu :: side_menu_fragment"></div>
+	<!-- th:replaceを使用して、 共通エラーメッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/errMessageArea}"></div>
+	<!-- th:replaceを使用して、 共通成功メッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/successMessageArea}"></div>
+	<div id="container">
+		<h1>書籍紹介画面</h1>
+		<div id="form">
+			<form th:action="@{/user_menu/library_search/detail}"
+				th:object="${libraryDetailBean}" method="post">
+				<input type="hidden" name="bookId" th:value="*{bookId}"></input>
+				<main>
+					<section>
+						<h2>書籍紹介</h2>
+						<div class="list">
+							<img src="images/sample1.jpg" alt="">
+							<h4 th:text="*{titleName}"></h4>
+							<p th:text="*{'著者 '+author}"></p>
+							<p th:text="*{'値段 '+price}"></p>
+							<p th:text="*{'出版日 '+publisherDate}"></p>
+							<p th:text="*{'出版社 '+publisherName}"></p>
+							<input type="submit" value="本をレンタルする">
+						</div>
+					</section>
+				</main>
+			</form>
+		</div>
+		<!-- th:replaceを使用して、 共通フッターエリアフラグメントを読込みます -->
+		<div th:replace="layout/footer :: footer_fragment"></div>
+	</div>
+	<!--/#container-->
+</body>
+</html>
