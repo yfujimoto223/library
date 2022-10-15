@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!-- th:replaceを使用して、 共通ヘッダエリアを読込みます -->
+<head
+	th:replace="layout/head :: head_fragment(title = '今週蔵書された書名一覧', scripts = ~{}, links = ~{})"></head>
+<body>
+	<!-- th:replaceを使用して、 共通ヘッダーエリアフラグメントを読込みます -->
+	<div th:replace="layout/header :: header_fragment"></div>
+	<!-- th:replaceを使用して、 共通ナビゲーションエリアフラグメントを読込みます -->
+	<div th:replace="layout/nav :: nav_fragment"></div>
+	<!-- th:replaceを使用して、 共通サイドメニューエリアフラグメントを読込みます -->
+	<div th:replace="layout/sideMenu :: side_menu_fragment"></div>
+	<!-- th:replaceを使用して、 共通エラーメッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/errMessageArea}"></div>
+	<!-- th:replaceを使用して、 共通成功メッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/successMessageArea}"></div>
+	<div id="container">
+		<h1>今週蔵書された書名一覧</h1>
+		<div id="form">
+			<form th:action="@{/information}" th:object="${informationBean}"
+				method="post">
+				<dl id="new" th:each="tmp : ${informationBean.searchResultList}">
+					<dt th:text="${tmp.inputDate}"></dt>
+					<dd th:text="${tmp.titleName}"></dd>
+				</dl>
+			</form>
+		</div>
+		<!-- th:replaceを使用して、 共通フッターエリアフラグメントを読込みます -->
+		<div th:replace="layout/footer :: footer_fragment"></div>
+	</div>
+	<!--/#container-->
+</body>
+</html>

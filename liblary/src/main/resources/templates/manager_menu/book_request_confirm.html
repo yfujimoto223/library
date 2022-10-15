@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!-- th:replaceを使用して、 共通ヘッダエリアを読込みます -->
+<head
+	th:replace="layout/head :: head_fragment(title = 'リクエスト書籍注文確認画面', scripts = ~{}, links = ~{})"></head>
+<body>
+	<!-- th:replaceを使用して、 共通ヘッダーエリアフラグメントを読込みます -->
+	<div th:replace="layout/header :: header_fragment"></div>
+	<!-- th:replaceを使用して、 共通ナビゲーションエリアフラグメントを読込みます -->
+	<div th:replace="layout/nav :: nav_fragment"></div>
+	<!-- th:replaceを使用して、 共通サイドメニューエリアフラグメントを読込みます -->
+	<div th:replace="layout/sideMenu :: side_menu_fragment"></div>
+	<!-- th:replaceを使用して、 共通エラーメッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/errMessageArea}"></div>
+	<!-- th:replaceを使用して、 共通成功メッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/successMessageArea}"></div>
+	<div id="container">
+		<h1>リクエスト書籍注文確認画面</h1>
+		<section class="search_area">
+			<form th:action="@{/manager_menu/book_request_confirm}"
+				th:object="${bookRequestConfirmBean}" method="post">
+				<section>
+					<h4>
+						リクエストされた書籍を選択する際はチェックを付けて<br />「カートに入れる」をクリックしてください。
+					</h4>
+					リクエスト日From:<input type="date" th:field="*{requestDateFrom}"
+						name="requestDateFrom">～ リクエスト日To:<input type="date"
+						th:field="*{requestDateTo}" name="requestDateTo"><br>
+					<button id="search">リクエストされた書籍を検索</button>
+				</section>
+				<section>
+					<h4>検索結果</h4>
+					<table>
+						<thead>
+							<tr>
+								<th>発注チェックボックス</th>
+								<th>ISBN</th>
+								<th>書名</th>
+								<th>著者</th>
+								<th>値段</th>
+								<th>出版社名</th>
+								<th>出版日</th>
+								<th>リクエスト日</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="tmp : ${bookRequestConfirmBean.searchResultList}">
+								<td><input type="checkbox" name="checks"
+									th:id="${tmp.requestId}" th:value="${tmp.requestId}"
+									th:checked="${bookRequestConfirmBean.checks.contains(tmp.requestId)}" />
+								</td>
+								<td th:text="${tmp.isbn}"></td>
+								<td th:text="${tmp.titleName}"></td>
+								<td th:text="${tmp.author}"></td>
+								<td th:text="${tmp.price}"></td>
+								<td th:text="${tmp.publisherName}"></td>
+								<td th:text="${tmp.publisherDate}"></td>
+								<td th:text="${tmp.requestDate}"></td>
+							</tr>
+							<tr>
+								<td colspan="8"></td>
+							</tr>
+							<tr>
+								<td colspan="8" align="right">
+									<button type="submit"
+										th:formaction="@{/manager_menu/book_request_confirm/add_cart}">カートに入れる</button>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+				<section>
+					<h4>注文する商品をカートに入れたら下記のボンタンをクリックしてください。</h4>
+					<button type="submit"
+						th:formaction="@{/manager_menu/book_request_confirm/move}">カートに入れた書籍を決済する</button>
+				</section>
+			</form>
+		</section>
+		<!-- th:replaceを使用して、 共通フッターエリアフラグメントを読込みます -->
+		<div th:replace="layout/footer :: footer_fragment"></div>
+	</div>
+	<!--/#container-->
+</body>
+</html>

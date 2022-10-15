@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!-- th:replaceを使用して、 共通ヘッダエリアを読込みます -->
+<head
+	th:replace="layout/head :: head_fragment(title = 'ログイン画面', scripts = ~{}, links = ~{})"></head>
+<body>
+	<!-- th:replaceを使用して、 共通エラーメッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/errMessageArea}"></div>
+	<!-- th:replaceを使用して、 共通成功メッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/successMessageArea}"></div>
+	<div id="container">
+		<h1>ログイン画面</h1>
+		<div id="form">
+			<form th:action="@{/login/}" th:object="${loginBean}" method="post">
+				<table>
+					<thead>
+						<tr>
+							<th colspan="2">ログイン情報をご記載下さい</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><label>カード番号</label></td>
+							<td><input type="text" th:field="*{cardId}" name="cardId" /></td>
+						</tr>
+						<tr>
+							<td><label>メールアドレス</label></td>
+							<td><input type="text" th:field="*{eMail}" name="eMail" /></td>
+						</tr>
+						<tr>
+							<td><label>パスワード</label></td>
+							<td><input type="password" th:field="*{password}"
+								name="pass" /></td>
+						</tr>
+						<tr>
+							<td><label>ログインカテゴリ</label></td>
+							<td>
+								<p class="check">
+									<input type="radio" th:field="*{selectLoginCategory}"
+										name="selectLoginCategory" value="0" checked="checked">利用者
+									<input type="radio" th:field="*{selectLoginCategory}"
+										name="selectLoginCategory" value="1">管理者 <input
+										type="radio" th:field="*{selectLoginCategory}"
+										name="selectLoginCategory" value="2">販売者
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><button>ログイン</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+		<div id="form">
+			<p class="form-title"></p>
+			<form th:action="@{/login/move/}" th:object="${loginBean}"
+				method="post">
+				<button>新規の方は個人情報を登録してください</button>
+			</form>
+		</div>
+		<!-- th:replaceを使用して、 共通フッターエリアフラグメントを読込みます -->
+		<div th:replace="layout/footer :: footer_fragment"></div>
+	</div>
+	<!--/#container-->
+</body>
+</html>

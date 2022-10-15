@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!-- th:replaceを使用して、 共通ヘッダエリアを読込みます -->
+<head
+	th:replace="layout/head :: head_fragment(title = 'リクエスト画面', scripts = ~{}, links = ~{})"></head>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+document.getElementById('get_book_info').addEventListener('click', function() {
+	  // isbnに入力された値を取得
+	  var userInput = document.getElementById('isbn').value;
+	  var query = userInput.split(' ').join('+');
+	  // APIを取得
+	  const url = "https://api.openbd.jp/v1/get?isbn=" + query + "&pretty";
+
+	// json
+	fetch(url).then(
+	  response => {
+	    return response.json();
+	  }).then(data => {
+	for (let i = 0; i < data.length; i++) {
+	  //書籍名
+	  document.getElementById('titleName').value = data[0].summary.title;
+	  //作者
+	  document.getElementById('author').value = data[0].summary.author;
+	  //出版社
+	  document.getElementById('publisherName').value = data[0].summary.publisher;
+	  //出版日
+	  var publisherDate=data[0].summary.pubdate;
+	  var yyyy= publisherDate.substr(0, 4);
+	  var mm= publisherDate.substr(4, 2);
+	  var dd=publisherDate.substr(6, 2);
+	  document.getElementById('publisherDate').value =yyyy+"-"+mm+"-"+dd;
+	  //値段
+	  document.getElementById('price').value =  data[0].onix.ProductSupply.SupplyDetail.Price[0].PriceAmount
+	  
+	}
+	// 情報エリアの表示
+	  //document.getElementById('bookInfo').classList.add('show');
+
+	}).catch(err => {
+	  console.log('Error: ' + err)
+	})
+
+	});
+}, false);
+
+    </script>
+<body>
+	<!-- th:replaceを使用して、 共通ヘッダーエリアフラグメントを読込みます -->
+	<div th:replace="layout/header :: header_fragment"></div>
+	<!-- th:replaceを使用して、 共通ナビゲーションエリアフラグメントを読込みます -->
+	<div th:replace="layout/nav :: nav_fragment"></div>
+	<!-- th:replaceを使用して、 共通サイドメニューエリアフラグメントを読込みます -->
+	<div th:replace="layout/sideMenu :: side_menu_fragment"></div>
+	<!-- th:replaceを使用して、 共通エラーメッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/errMessageArea}"></div>
+	<!-- th:replaceを使用して、 共通成功メッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/successMessageArea}"></div>
+	<div id="container">
+		<h1>リクエスト画面</h1>
+		<button id="get_book_info">ISBNに応じた書籍情報を取得</button>
+		<div id="form">
+			<form th:action="@{/user_menu/book_request/}"
+				th:object="${bookRequestBean}" method="post">
+				<table>
+					<thead>
+						<tr>
+							<th colspan="2">リクエストしたい本のISBNを入力してください。</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><label>ISBN:</label></td>
+							<td><input id="isbn" name="isbn" th:field="*{isbn}"
+								th:value="*{isbn}" type="text"></input></td>
+						</tr>
+						<tr>
+							<td><label>書名:</label></td>
+							<td><input id="titleName" th:field="*{titleName}"
+								th:value="*{titleName}" readonly></input></td>
+						</tr>
+						<tr>
+							<td><label>著者:</label></td>
+							<td><input id="author" th:field="*{author}"
+								th:value="*{author}" readonly></input></td>
+						</tr>
+						<tr>
+							<td><label>値段:</label></td>
+							<td><input id="price" th:field="*{price}"
+								th:value="*{price}" readonly></input></td>
+						</tr>
+						<tr>
+							<td><label>出版社:</label></td>
+							<td><input id="publisherName" th:field="*{publisherName}"
+								th:value="*{publisherName}" readonly></input></td>
+						</tr>
+						<tr>
+							<td><label>出版日:</label></td>
+							<td><input id="publisherDate" th:field="*{publisherDate}"
+								th:value="*{publisherDate}" readonly></input></td>
+						</tr>
+					</tbody>
+				</table>
+				<button class="button_class">書籍をリクエストする</button>
+			</form>
+		</div>
+		<!-- th:replaceを使用して、 共通フッターエリアフラグメントを読込みます -->
+		<div th:replace="layout/footer :: footer_fragment"></div>
+	</div>
+	<!--/#container-->
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!-- th:replaceを使用して、 共通ヘッダエリアを読込みます -->
+<head
+	th:replace="layout/head :: head_fragment(title = 'システム操作方法説明', scripts = ~{}, links = ~{})"></head>
+<body>
+	<!-- th:replaceを使用して、 共通ヘッダーエリアフラグメントを読込みます -->
+	<div th:replace="layout/header :: header_fragment"></div>
+	<!-- th:replaceを使用して、 共通ナビゲーションエリアフラグメントを読込みます -->
+	<div th:replace="layout/nav :: nav_fragment"></div>
+	<!-- th:replaceを使用して、 共通エラーメッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/errMessageArea}"></div>
+	<!-- th:replaceを使用して、 共通成功メッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/successMessageArea}"></div>
+	<!-- th:replaceを使用して、 共通サイドメニューエリアフラグメントを読込みます -->
+	<div th:replace="layout/sideMenu :: side_menu_fragment"></div>
+	<div id="container">
+		<h1>システム操作方法説明画面</h1>
+		<main>
+			<section>
+				<h2>ログインについて</h2>
+				<div class="list">
+					<img src="images/sample1.jpg" alt="">
+					<h4>ログインカテゴリ</h4>
+					<p>ログインする際に以下の「ログインカテゴリ」を選択します。</p>
+					<p>「利用者」・・・本の貸出、返却、リクエストを行います。</p>
+					<p>「管理者」・・・「利用者」への本の貸出状況、リクエストされた書籍の注文などを行います。</p>
+					<p>「販売者」・・・「管理者」から発注された「リクエスト書籍」を納品します。</p>
+					<h4>カード番号について</h4>
+					<p>「新規登録画面」で個人情報を登録後、個人情報を識別するキーがDBへ登録されます。</p>
+					<p>「利用者」・・・「予約者」DBの「貸出券番号」を参照してください。</p>
+					<p>「管理者」・・・「管理者」DBの「管理者番号」を参照してください。</p>
+					<p>「販売者」・・・「販売者」DBの「販売者番号」を参照してください。</p>
+					<h4>ログイン方法について</h4>
+					<p>「新規登録画面」で個人情報を登録後、ログイン可能になります。</p>
+					<p>入力する個人情報は以下のDBを参照してください。</p>
+					<p>「利用者」・・・「予約者」DB</p>
+					<p>「管理者」・・・「管理者」DB</p>
+					<p>「販売者」・・・「販売者」DB</p>
+				</div>
+				<h2>「ログインカテゴリ」で「利用者」を選択した際に実行可能な操作について</h2>
+				<div class="list">
+					<img src="images/sample1.jpg" alt="">
+					<h4>本の貸出</h4>
+					<p>蔵書された本を検索し、本をレンタルします。</p>
+					<p>一度に最大五冊まで貸出可能です。</p>
+					<p>レンタル期間は一週間となっています。</p>
+					<h4>本の返却</h4>
+					<p>レンタルした本を返却します。</p>
+					<h4>本のリクエスト</h4>
+					<p>ISBNを入力し、図書館へ蔵書して欲しい書籍をリクエストすることができます。</p>
+					<h4>管理者からのメッセージ</h4>
+					<p>図書館の利用状況について「管理者」からメッセージが届く場合があります。</p>
+
+				</div>
+				<h2>「ログインカテゴリ」で「販売者」を選択した際に実行可能な操作について</h2>
+				<div class="list">
+					<img src="images/sample1.jpg" alt="">
+					<h4>「利用者」への書籍の貸出状況について</h4>
+					<p>「利用者」へ貸出した書籍の貸出状況について確認できます。</p>
+					<p>「返却日」が過ぎている「利用者」へメッセージを送ることが可能です。</p>
+					<h4>リクエスト書籍の注文</h4>
+					<p>「利用者」からリクエストがあった書籍を「販売者」へ注文することができます。</p>
+					<h4>注文した「リクエスト書籍」の納品状況を確認の確認</h4>
+					<p>「販売者」が対応した「リクエスト書籍」の納品状況を確認の確認することができます。</p>
+				</div>
+				<h2>「ログインカテゴリ」で「販売者」を選択した際に実行可能な操作について</h2>
+				<div class="list">
+					<img src="images/sample1.jpg" alt="">
+					<h4>注文書籍の納品</h4>
+					<p>「管理者」から注文があった書籍を納品することができます。</p>
+				</div>
+			</section>
+		</main>
+	</div>
+	<!-- th:replaceを使用して、 共通フッターエリアフラグメントを読込みます -->
+	<div th:replace="layout/footer :: footer_fragment"></div>
+
+	<!--/#container-->
+</body>
+</html>

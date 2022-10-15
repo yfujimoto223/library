@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!-- th:replaceを使用して、 共通ヘッダエリアを読込みます -->
+<head
+	th:replace="layout/head :: head_fragment(title = '書籍納品詳細画面', scripts = ~{}, links = ~{})"></head>
+<body>
+	<!-- th:replaceを使用して、 共通ヘッダーエリアフラグメントを読込みます -->
+	<div th:replace="layout/header :: header_fragment"></div>
+	<!-- th:replaceを使用して、 共通ナビゲーションエリアフラグメントを読込みます -->
+	<div th:replace="layout/nav :: nav_fragment"></div>
+	<!-- th:replaceを使用して、 共通サイドメニューエリアフラグメントを読込みます -->
+	<div th:replace="layout/sideMenu :: side_menu_fragment"></div>
+	<!-- th:replaceを使用して、 共通エラーメッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/errMessageArea}"></div>
+	<!-- th:replaceを使用して、 共通成功メッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/successMessageArea}"></div>
+	<div id="container">
+		<h1>書籍納品詳細画面</h1>
+		<section class="search_area">
+			<form th:action="@{/sales_menu/order_product_detail}"
+				th:object="${orderedProductDetailBean}" method="post">
+				<table>
+					<thead>
+						<tr>
+							<th>ISBN</th>
+							<th>書名</th>
+							<th>著者</th>
+							<th>値段</th>
+							<th>出版社名</th>
+							<th>出版日</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="tmp : ${orderedProductDetailBean.searchResultList}">
+							<td th:text="${tmp.isbn}"></td>
+							<td th:text="${tmp.titleName}"></td>
+							<td th:text="${tmp.author}"></td>
+							<td th:text="${tmp.price}"></td>
+							<td th:text="${tmp.publisherName}"></td>
+							<td th:text="${tmp.publisherDate}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</section>
+		<!-- th:replaceを使用して、 共通フッターエリアフラグメントを読込みます -->
+		<div th:replace="layout/footer :: footer_fragment"></div>
+	</div>
+	<!--/#container-->
+</body>
+</html>

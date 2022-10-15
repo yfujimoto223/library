@@ -1,0 +1,10 @@
+<nav id="side_menu_ubar" xmlns:th="http://www.thymeleaf.org"
+	th:fragment="side_menu_fragment">
+	<!--サイドメニュー-->
+	<div class="side_menu">
+		<ul style="text-align: right;">
+			<li><a th:href="@{/personal_data_change/}">登録した個人情報を変更する</a></li>
+			<li><a th:href="@{/logout/}">ログアウト</a></li>
+		</ul>
+	</div>
+</nav>

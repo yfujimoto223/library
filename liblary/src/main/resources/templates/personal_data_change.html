@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!-- th:replaceを使用して、 共通ヘッダエリアを読込みます -->
+<head
+	th:replace="layout/head :: head_fragment(title = '個人情報変更画面', scripts = ~{}, links = ~{})"></head>
+<body>
+	<!-- th:replaceを使用して、 共通ヘッダーエリアフラグメントを読込みます -->
+	<div th:replace="layout/header :: header_fragment"></div>
+	<!-- th:replaceを使用して、 共通ナビゲーションエリアフラグメントを読込みます -->
+	<div th:replace="layout/nav :: nav_fragment"></div>
+	<!-- th:replaceを使用して、 共通サイドメニューエリアフラグメントを読込みます -->
+	<div th:replace="layout/sideMenu :: side_menu_fragment"></div>
+	<!-- th:replaceを使用して、 共通エラーメッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/errMessageArea}"></div>
+	<!-- th:replaceを使用して、 共通成功メッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/successMessageArea}"></div>
+	<div id="container">
+		<h1>個人情報変更画面</h1>
+		<div id="form">
+			<form th:action="@{/personal_data_change/}"
+				th:object="${personalDataChangeBean}" method="post">
+				<table>
+					<thead>
+						<tr>
+							<th colspan="2">変更したい個人情報を入力してください</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><label>カード番号</label></td>
+							<td><input th:field="*{cardId}" th:value="*{cardId}" name="cardId"
+								type="text" disabled></td>
+						</tr>
+						<tr>
+							<td><label>名前</label></td>
+							<td><input th:field="*{name}" th:value="*{name}" name="name"
+								type="text"></td>
+						</tr>
+						<tr>
+							<td><label>ふりがな</label></td>
+							<td><input th:field="*{furigana}" th:value="*{furigana}"
+								name="furigana" type="text"></td>
+						</tr>
+						<tr>
+							<td><label>住所</label></td>
+							<td><input th:field="*{address}" th:value="*{address}"
+								name="address" type="text"></td>
+						</tr>
+						<tr>
+							<td><label>郵便番号</label></td>
+							<td><input th:field="*{postNo}" th:value="*{postNo}"
+								name="postNo" type="text"></td>
+						</tr>
+						<tr>
+							<td><label>EMAIL</label></td>
+							<td><input th:field="*{eMail}" th:value="*{eMail}"
+								name="eMail" type="text"></td>
+						</tr>
+						<tr>
+							<td><label>パスワード</label></td>
+							<td><input th:field="*{password}" th:value="*{password}"
+								name="password" type="text"></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="item no-label">
+					<button>個人情報を変更する</button>
+				</div>
+			</form>
+		</div>
+		<!-- th:replaceを使用して、 共通フッターエリアフラグメントを読込みます -->
+		<div th:replace="layout/footer :: footer_fragment"></div>
+	</div>
+	<!--/#container-->
+</body>
+</html>

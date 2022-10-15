@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!-- th:replaceを使用して、 共通ヘッダエリアを読込みます -->
+<head
+	th:replace="layout/head :: head_fragment(title = '貸出状況確認画面', scripts = ~{}, links = ~{})"></head>
+<body>
+	<!-- th:replaceを使用して、 共通ヘッダーエリアフラグメントを読込みます -->
+	<div th:replace="layout/header :: header_fragment"></div>
+	<!-- th:replaceを使用して、 共通ナビゲーションエリアフラグメントを読込みます -->
+	<div th:replace="layout/nav :: nav_fragment"></div>
+	<!-- th:replaceを使用して、 共通サイドメニューエリアフラグメントを読込みます -->
+	<div th:replace="layout/sideMenu :: side_menu_fragment"></div>
+	<!-- th:replaceを使用して、 共通エラーメッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/errMessageArea}"></div>
+	<!-- th:replaceを使用して、 共通成功メッセージエリアのフラグメントを読込みます -->
+	<div th:replace="~{layout/successMessageArea}"></div>
+	<div id="container">
+		<h1>貸出状況確認画面</h1>
+		<div id="form">
+			<form th:action="@{/manager_menu/rental_book_confirm}"
+				th:object="${rentalBookConfirmBean}" method="post">
+				<section>
+					<h4>
+						図書館利用者の貸出状況を確認する画面です。<br>検索条件を入力してください。
+					</h4>
+					利用者名:<input type="text" th:field="*{userName}" name="userName"><br>
+					返却予定日From:<input type="date" th:field="*{rentalBookReturnDateFrom}"
+						name="rentalBookReturnDateFrom">～ 返却予定日To:<input
+						type="date" th:field="*{rentalBookReturnDateTo}"
+						name="rentalBookReturnDateTo">
+					<div align="left">
+						<button id="search">本の貸出状況を検索</button>
+					</div>
+				</section>
+				<section>
+					<h4>検索結果</h4>
+					<table>
+						<thead>
+							<tr>
+								<th>利用者名</th>
+								<th>カード番号</th>
+								<th>メールアドレス</th>
+								<th>返却予定日</th>
+								<th>貸出冊数</th>
+								<th>返却冊数</th>
+								<th>貸出状況</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="tmp : ${rentalBookConfirmBean.searchResultList}">
+								<td th:text="${tmp.userName}">/td>
+								<td th:text="${tmp.cardNo}">/td>
+								<td th:text="${tmp.mail}"></td>
+								<td th:text="${tmp.BookReturnDate}"></td>
+								<td th:text="${tmp.rentalBookCount}"></td>
+								<td th:text="${tmp.returnBookCount}"></td>
+								<td><a th:href="${tmp.detailLink}">詳細を確認</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+			</form>
+		</div>
+		<!-- th:replaceを使用して、 共通フッターエリアフラグメントを読込みます -->
+		<div th:replace="layout/footer :: footer_fragment"></div>
+	</div>
+	<!--/#container-->
+</body>
+</html>
