@@ -52,6 +52,18 @@ CREATE TABLE 管理者
    パスワード VARCHAR (30),
    PRIMARY KEY (管理者ID)
 );
+CREATE TABLE 販売者
+(
+   販売者ID IDENTITY NOT NULL,
+   販売者番号 BIGINT,
+   名前 VARCHAR (100),
+   ふりがな VARCHAR (100),
+   住所 VARCHAR (100),
+   郵便番号 VARCHAR (14),
+   EMAIL VARCHAR (128),
+   パスワード VARCHAR (30),
+   PRIMARY KEY (販売者ID)
+);
 CREATE TABLE リクエスト書籍
 (
    リクエストID IDENTITY NOT NULL,
